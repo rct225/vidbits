@@ -3,6 +3,7 @@ const request = require('supertest');
 const app = require('../../app');
 //const {connectDatabase, disconnectDatabase} = require('../database-utilities');
 const {mongoose, databaseUrl, options} = require('../../database');
+const Video = require('../../models/video');
 
 describe('POST /videos', () => {
   beforeEach(async () => {
