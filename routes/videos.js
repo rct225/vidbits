@@ -18,8 +18,7 @@ router.post('/videos', async (req, res) => {
 
   if (video.errors) {
     res.status(400);
-    //response.render('videos/create', {video});
-    res.send('');
+    res.render('videos/create', {video});
   } else {
     await video.save();
     res.status(201).render('videos/show', {video});
