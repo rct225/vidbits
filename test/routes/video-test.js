@@ -73,7 +73,7 @@ describe('POST /videos', () => {
 
     assert.equal(response.status, 302);
   });
-  it('response includes saved video', async () => {
+  it('redirects to the new Video show page', async () => {
     const title = 'Cats';
     const description = 'Everyone like Cats';
 
@@ -82,8 +82,7 @@ describe('POST /videos', () => {
       .type('form')
       .send({title, description});
 
-    assert.include(response.text, title);
-    assert.include(response.text, description);
+    assert.match(response.headers.location, /\/videos\/\w*$/);
   });
   it('saves a Video document', async () => {
     const title = 'Cats';
