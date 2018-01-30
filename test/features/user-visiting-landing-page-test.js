@@ -16,7 +16,7 @@ describe('User visiting landing page', () => {
     it('shows it in the list', () => {
       const title = 'Cats';
       const description = 'Everyone like Cats';
-      const url = `http://example.com/${Math.random()}`;
+      const url = generateRandomUrl('example.com');
 
       browser.url('/videos/create');
       browser.setValue('#title-input', title);
