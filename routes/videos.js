@@ -29,8 +29,8 @@ router.post('/videos', async (req, res) => {
     res.render('videos/create', {video});
   } else {
     await video.save();
-    res.status(201).render('videos/show', {video});
-    //response.redirect(`/videos/${video._id}`);
+    //res.status(201).render('videos/show', {video});
+    res.redirect(`/videos/${video._id}`);
   }
 });
 
