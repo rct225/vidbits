@@ -19,8 +19,8 @@ router.get('/videos/:id', async (req, res) => {
 });
 
 router.post('/videos', async (req, res) => {
-  const {title, description} = req.body;
-  const video = new Video({title, description});
+  const {title, description, url} = req.body;
+  const video = new Video({title, description, url});
   video.validateSync();
 
   if (video.errors) {
