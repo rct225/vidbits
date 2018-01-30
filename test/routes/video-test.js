@@ -22,10 +22,10 @@ describe('POST /videos', () => {
     const response = await request(app)
       .post('/videos')
       .type('form')
-      .send({title, description})
+      .send({title, description});
 
     assert.equal(response.status, 201);
-  })
+  });
 
   it('saves a Video document', async () => {
     const title = 'Cats';
@@ -34,9 +34,9 @@ describe('POST /videos', () => {
     const response = await request(app)
       .post('/videos')
       .type('form')
-      .send({title, description})
+      .send({title, description});
 
     const video = await Video.findOne({});
     assert.include(video, {title, description});
-  })
+  });
 });
