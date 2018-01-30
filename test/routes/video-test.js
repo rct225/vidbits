@@ -88,14 +88,15 @@ describe('POST /videos', () => {
   it('saves a Video document', async () => {
     const title = 'Cats';
     const description = 'Everyone like Cats';
+    const url = `http://example.com/${Math.random()}`;
 
     const response = await request(app)
       .post('/videos')
       .type('form')
-      .send({title, description});
+      .send({title, description, url});
 
     const video = await Video.findOne({});
-    assert.include(video, {title, description});
+    assert.include(video, {title, description, url});
   });
   describe('when the title is missing', () => {
     it('does not save the Video', async () => {
