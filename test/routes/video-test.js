@@ -122,8 +122,9 @@ describe('POST /videos', () => {
         .type('form')
         .send({title, description})
 
-      const pageText = parseTextFromHTML(response.text, 'body');
-      assert.include(pageText, 'title is required');
+      //console.log(response.text);
+      const bodyText = parseTextFromHTML(response.text, 'body');
+      assert.include(bodyText, 'title is required');
     });
   });
 });

@@ -17,6 +17,7 @@ router.post('/videos', async (req, res) => {
   video.validateSync();
 
   if (video.errors) {
+    //console.log(video.errors.title.message);
     res.status(400);
     res.render('videos/create', {video});
   } else {
