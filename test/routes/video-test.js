@@ -62,7 +62,7 @@ describe('POST /videos', () => {
   beforeEach(connectDatabase);
   afterEach(disconnectDatabase);
 
-  it('responds with a 201 status code', async () => {
+  it('responds with a 302 status code', async () => {
     const title = 'Cats';
     const description = 'Everyone like Cats';
 
@@ -71,7 +71,7 @@ describe('POST /videos', () => {
       .type('form')
       .send({title, description});
 
-    assert.equal(response.status, 201);
+    assert.equal(response.status, 302);
   });
   it('response includes saved video', async () => {
     const title = 'Cats';
