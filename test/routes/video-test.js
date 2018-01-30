@@ -1,19 +1,12 @@
 const {assert} = require('chai');
 const request = require('supertest');
 const app = require('../../app');
-//const {connectDatabase, disconnectDatabase} = require('../database-utilities');
-const {mongoose, databaseUrl, options} = require('../../database');
+const {connectDatabase, disconnectDatabase} = require('../database-utilities');
 const Video = require('../../models/video');
 
 describe('POST /videos', () => {
-  beforeEach(async () => {
-    await mongoose.connect(databaseUrl, options);
-    await mongoose.connection.db.dropDatabase();
-  });
-
-  afterEach(async () => {
-     await mongoose.disconnect();
-  });
+  beforeEach(connectDatabase);
+  afterEach(disconnectDatabase);
 
   it('responds with a 201 status code', async () => {
     const title = 'Cats';
