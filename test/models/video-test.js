@@ -14,6 +14,13 @@ describe('Video', () => {
 
       assert.strictEqual(video.title, titleAsInt.toString());
     });
+    it('is required', () => {
+      const video = new Video({title: null});
+
+      video.validateSync();
+
+      assert.equal(video.errors.title.message, 'title is required');
+    });
   });
   describe('#description', () => {
     it('is a String', () => {
