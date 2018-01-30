@@ -113,5 +113,17 @@ describe('POST /videos', () => {
       const titleInput = queryHTML(response.text, '[name="title"]');
       assert.ok(titleInput, 'could not find `title` input');
     });
+    it('renders the validation error message', async () => {
+      const title = '';
+      const description = 'Everyone like Cats';
+
+      const response = await request(app)
+        .post('/videos')
+        .type('form')
+        .send({title, description})
+
+      const pageText = parseTextFromHTML(response.text, 'body');
+      assert.include(pageText, 'title is required');
+    });
   });
 });
