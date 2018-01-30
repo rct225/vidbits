@@ -5,6 +5,7 @@ const Video = mongoose.model(
   mongoose.Schema({
     title: {
       type: String,
+      required: 'title is required'
     },
     description: {
       type: String,

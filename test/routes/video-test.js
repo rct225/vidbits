@@ -77,4 +77,18 @@ describe('POST /videos', () => {
     const video = await Video.findOne({});
     assert.include(video, {title, description});
   });
+  describe('when the title is missing', () => {
+    it('does not save the Video', async () => {
+      const title = '';
+      const description = 'Everyone like Cats';
+
+      const response = await request(app)
+        .post('/videos')
+        .type('form')
+        .send({title, description})
+
+      const videos = await Video.find({});
+      assert.equal(videos.length, 0);
+    });
+  });
 });
