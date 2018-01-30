@@ -101,5 +101,17 @@ describe('POST /videos', () => {
 
       assert.equal(response.status, 400);
     });
+    it('renders the video form', async () => {
+      const title = '';
+      const description = 'Everyone like Cats';
+
+      const response = await request(app)
+        .post('/videos')
+        .type('form')
+        .send({title, description})
+
+      const titleInput = queryHTML(response.text, '[name="title"]');
+      assert.ok(titleInput, 'could not find `title` input');
+    });
   });
 });
