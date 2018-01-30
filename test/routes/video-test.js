@@ -126,5 +126,19 @@ describe('POST /videos', () => {
       const bodyText = parseTextFromHTML(response.text, 'body');
       assert.include(bodyText, 'title is required');
     });
+    it('preserves the other field values', async () => {
+      const title = '';
+      const description = 'Everyone like Cats';
+
+      const response = await request(app)
+        .post('/videos')
+        .type('form')
+        .send({title, description})
+
+      const descriptionInput = queryHTML(response.text, '[name="description"]');
+      //const urlInput = queryHTML(response.text, '[name="url"]');
+      assert.equal(descriptionInput.value, description);
+      //assert.equal(urlInput.value, url);
+    });
   });
 });
