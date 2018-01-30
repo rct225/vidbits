@@ -90,5 +90,16 @@ describe('POST /videos', () => {
       const videos = await Video.find({});
       assert.equal(videos.length, 0);
     });
+    it('responds with a 400', async () => {
+      const title = '';
+      const description = 'Everyone like Cats';
+
+      const response = await request(app)
+        .post('/videos')
+        .type('form')
+        .send({title, description})
+
+      assert.equal(response.status, 400);
+    });
   });
 });
