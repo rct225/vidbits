@@ -19,7 +19,7 @@ const parseTextFromHTML = (htmlAsString, selector) => {
   }
 };
 
-describe('GET /', () => {
+describe('GET /videos', () => {
   beforeEach(connectDatabase);
   afterEach(disconnectDatabase);
 
@@ -30,7 +30,7 @@ describe('GET /', () => {
     });
 
     const response = await request(app).get('/');
-
+    console.log(response.text);
     const bodyText = parseTextFromHTML(response.text, 'body');
     //const iFrame = queryHTML(response.text, 'iframe');
     //assert.equal(iFrame.src, video.url);
