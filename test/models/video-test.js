@@ -24,6 +24,15 @@ describe('Video', () => {
       assert.strictEqual(video.title, titleAsInt.toString());
     });
   });
+  describe('#description', () => {
+    it('is a String', () => {
+      const descriptionAsInt = 1;
+
+      const video = new Video({description: descriptionAsInt});
+
+      assert.strictEqual(video.description, descriptionAsInt.toString());
+    });
+  });
 });
 
 module.exports = {
