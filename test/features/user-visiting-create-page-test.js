@@ -7,7 +7,7 @@ describe('User visiting new videos page', () => {
       description: 'Everyone like Cats',
     };
 
-    browser.url('/videos/create.html');
+    browser.url('/videos/create');
     browser.setValue('#title-input', videoToAdd.title);
     browser.setValue('#description-input', videoToAdd.description);
     browser.click('#submit-button');
