@@ -15,9 +15,9 @@ router.post('/videos', async (req, res) => {
   const {title, description} = req.body;
   const video = new Video({title, description});
   video.validateSync();
-  
+
   if (video.errors) {
-    //response.status(400);
+    res.status(400);
     //response.render('videos/create', {video});
     res.send('');
   } else {
