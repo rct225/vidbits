@@ -27,13 +27,14 @@ describe('GET /videos', () => {
     const video = await Video.create({
       title: 'Cats',
       description: 'Everyone like Cats',
+      url: `http://example.com/${Math.random()}`
     });
 
     const response = await request(app).get('/');
     //console.log(response.text);
     const bodyText = parseTextFromHTML(response.text, 'body');
-    //const iFrame = queryHTML(response.text, 'iframe');
-    //assert.equal(iFrame.src, video.url);
+    const iFrame = queryHTML(response.text, 'iframe');
+    assert.equal(iFrame.src, video.url);
     assert.include(bodyText, video.title);
   });
 });

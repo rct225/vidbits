@@ -12,15 +12,17 @@ describe('User visiting landing page', () => {
     it('shows it in the list', () => {
       const title = 'Cats';
       const description = 'Everyone like Cats';
+      const url = `http://example.com/${Math.random()}`;
 
       browser.url('/videos/create');
       browser.setValue('#title-input', title);
       browser.setValue('#description-input', description);
+      browser.setValue('#url-input', url);
       browser.click('#submit-button');
       browser.url('/');
 
       assert.equal(browser.getText('#videos-container'), title);
-      //assert.equal(browser.getAttribute('iframe', 'src'), url);
+      assert.equal(browser.getAttribute('iframe', 'src'), url);
     });
   });
 
