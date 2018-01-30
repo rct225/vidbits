@@ -19,7 +19,18 @@ describe('POST /videos', () => {
 
     assert.equal(response.status, 201);
   });
+  it('response includes saved video', async () => {
+    const title = 'Cats';
+    const description = 'Everyone like Cats';
 
+    const response = await request(app)
+      .post('/videos')
+      .type('form')
+      .send({title, description});
+
+    assert.include(response.text, title);
+    assert.include(response.text, description);
+  });
   it('saves a Video document', async () => {
     const title = 'Cats';
     const description = 'Everyone like Cats';
