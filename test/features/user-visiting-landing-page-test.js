@@ -28,6 +28,21 @@ describe('User visiting landing page', () => {
       assert.equal(browser.getText('#videos-container'), title);
       assert.equal(browser.getAttribute('iframe', 'src'), url);
     });
+    it('can navigate to a video', () => {
+      const title = 'Cats';
+      const description = 'Everyone like Cats';
+      const url = generateRandomUrl('example.com');
+
+      browser.url('/videos/create');
+      browser.setValue('#title-input', title);
+      browser.setValue('#description-input', description);
+      browser.setValue('#url-input', url);
+      browser.click('#submit-button');
+      browser.url('/');
+      browser.click('#videos-container a');
+
+      assert.include(browser.getText('body'), description);
+    });
   });
 
   it('can navigate to create page', () => {
