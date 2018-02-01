@@ -4,6 +4,18 @@ const generateRandomUrl = (domain) => {
   return `http://${domain}/${Math.random()}`;
 };
 
+const buildAndSubmitForm = (browser, video) => {
+  title = video.title;
+  description = video.description;
+  url = video.url;
+
+  browser.setValue('[name=title]', title);
+  browser.setValue('[name=description]', description);
+  browser.setValue('[name=url]', url);
+  browser.click('[type=submit]');
+};
+
+
 describe('User visiting landing page', () => {
   describe('with no existing videos', () => {
     it('shows no videos', () => {
@@ -19,10 +31,7 @@ describe('User visiting landing page', () => {
       const url = generateRandomUrl('example.com');
 
       browser.url('/videos/create');
-      browser.setValue('#title-input', title);
-      browser.setValue('#description-input', description);
-      browser.setValue('#url-input', url);
-      browser.click('#submit-button');
+      buildAndSubmitForm(browser, {title, description, url});
       browser.url('/');
 
       assert.equal(browser.getText('#videos-container'), title);
@@ -34,10 +43,7 @@ describe('User visiting landing page', () => {
       const url = generateRandomUrl('example.com');
 
       browser.url('/videos/create');
-      browser.setValue('#title-input', title);
-      browser.setValue('#description-input', description);
-      browser.setValue('#url-input', url);
-      browser.click('#submit-button');
+      buildAndSubmitForm(browser, {title, description, url});
       browser.url('/');
       browser.click('#videos-container a');
 
