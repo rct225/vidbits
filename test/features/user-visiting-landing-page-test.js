@@ -26,7 +26,7 @@ describe('User visiting landing page', () => {
   });
   describe('with an existing video', () => {
     it('shows it in the list', () => {
-      const title = 'Cats';
+      const title = 'Meow';
       const description = 'Everyone like Cats';
       const url = generateRandomUrl('example.com');
 
@@ -38,7 +38,7 @@ describe('User visiting landing page', () => {
       assert.equal(browser.getAttribute('iframe', 'src'), url);
     });
     it('can navigate to a video', () => {
-      const title = 'Cats';
+      const title = 'Meow';
       const description = 'Everyone like Cats';
       const url = generateRandomUrl('example.com');
 

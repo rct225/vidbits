@@ -3,7 +3,7 @@ const {assert} = require('chai');
 describe('User visiting new videos page', () => {
   it('can save a video', () => {
     const videoToAdd = {
-      title: 'Cats',
+      title: 'Meow',
       description: 'Everyone like Cats',
       url: `http://example.com/${Math.random()}`
     };

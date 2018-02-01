@@ -3,7 +3,7 @@ const {assert} = require('chai');
 describe('User updating video', () => {
   it('changes the values', () => {
     const videoToAdd = {
-      title: 'Cats',
+      title: 'Meow',
       description: 'Everyone like Cats',
       url: `http://example.com/${Math.random()}`
     };
@@ -24,7 +24,7 @@ describe('User updating video', () => {
   });
   it('does not create an additional video', () => {
     const videoToAdd = {
-      title: 'Cats',
+      title: 'Meow',
       description: 'Everyone like Cats',
       url: `http://example.com/${Math.random()}`
     };
