@@ -18,6 +18,10 @@ router.get('/videos/:id', async (req, res) => {
   res.render('videos/show', {video});
 });
 
+router.get('/videos/:id/edit', async (req, res) => {
+  res.render('videos/create');
+});
+
 router.post('/videos', async (req, res) => {
   const {title, description, url} = req.body;
   const video = new Video({title, description, url});
