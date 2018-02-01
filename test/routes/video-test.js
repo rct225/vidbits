@@ -229,8 +229,9 @@ describe('POST /videos/:id/updates', () => {
       .post(`/videos/${video._id}/updates`)
       .type('form')
       .send({title, description, url});
-
+    console.log(response.text);
     const updatedVideo = await Video.findOne({ _id: video._id });
+    console.log(updatedVideo);
     assert.include(updatedVideo, {title, description, url});
   });
 });
