@@ -52,7 +52,7 @@ describe('GET /videos/:id', () => {
 
     const response = await request(app).get(`/videos/${video._id}`);
 
-    console.log(response.text);
+    // console.log(response.text);
     const pageText = parseTextFromHTML(response.text, 'body');
     const iFrame = queryHTML(response.text, 'iframe');
     assert.equal(iFrame.src, video.url);
