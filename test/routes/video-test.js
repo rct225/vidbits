@@ -61,6 +61,26 @@ describe('GET /videos/:id', () => {
   });
 });
 
+describe('GET /videos/:id/edit', () => {
+  beforeEach(connectDatabase);
+  afterEach(disconnectDatabase);
+
+  it('renders a form for the Video', async () => {
+    const video = await Video.create({
+      title: 'Cats',
+      description: 'Everyone like Cats',
+      url: `http://example.com/${Math.random()}`,
+    });
+
+    const response = await request(app).get(`/videos/${video._id}/edit`);
+    const titleInput = queryHTML(response.text, '[name="title"]');
+    const descriptionInput = queryHTML(response.text, '[name="description"]');
+    const urlInput = queryHTML(response.text, '[name="url"]');
+    assert.equal(descriptionInput.value, description);
+    assert.equal(urlInput.value, url);
+  });
+});
+
 describe('POST /videos', () => {
   beforeEach(connectDatabase);
   afterEach(disconnectDatabase);
