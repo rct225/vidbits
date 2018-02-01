@@ -31,7 +31,7 @@ describe('GET /videos', () => {
     });
 
     const response = await request(app).get('/');
-    //console.log(response.text);
+    // console.log(response.text);
     const bodyText = parseTextFromHTML(response.text, 'body');
     const iFrame = queryHTML(response.text, 'iframe');
     assert.equal(iFrame.src, video.url);
