@@ -68,22 +68,24 @@ describe('POST /videos', () => {
   it('responds with a 302 status code', async () => {
     const title = 'Cats';
     const description = 'Everyone like Cats';
+    const url = `http://example.com/${Math.random()}`;
 
     const response = await request(app)
       .post('/videos')
       .type('form')
-      .send({title, description});
+      .send({title, description, url});
 
     assert.equal(response.status, 302);
   });
   it('redirects to the new Video show page', async () => {
     const title = 'Cats';
     const description = 'Everyone like Cats';
+    const url = `http://example.com/${Math.random()}`;
 
     const response = await request(app)
       .post('/videos')
       .type('form')
-      .send({title, description});
+      .send({title, description, url});
 
     assert.match(response.headers.location, /\/videos\/\w*$/);
   });
@@ -104,11 +106,12 @@ describe('POST /videos', () => {
     it('does not save the Video', async () => {
       const title = '';
       const description = 'Everyone like Cats';
+      const url = `http://example.com/${Math.random()}`;
 
       const response = await request(app)
         .post('/videos')
         .type('form')
-        .send({title, description})
+        .send({title, description, url})
 
       const videos = await Video.find({});
       assert.equal(videos.length, 0);
@@ -116,22 +119,24 @@ describe('POST /videos', () => {
     it('responds with a 400', async () => {
       const title = '';
       const description = 'Everyone like Cats';
+      const url = `http://example.com/${Math.random()}`;
 
       const response = await request(app)
         .post('/videos')
         .type('form')
-        .send({title, description})
+        .send({title, description, url})
 
       assert.equal(response.status, 400);
     });
     it('renders the video form', async () => {
       const title = '';
       const description = 'Everyone like Cats';
+      const url = `http://example.com/${Math.random()}`;
 
       const response = await request(app)
         .post('/videos')
         .type('form')
-        .send({title, description})
+        .send({title, description, url})
 
       const titleInput = queryHTML(response.text, '[name="title"]');
       assert.ok(titleInput, 'could not find `title` input');
@@ -139,11 +144,12 @@ describe('POST /videos', () => {
     it('renders the validation error message', async () => {
       const title = '';
       const description = 'Everyone like Cats';
+      const url = `http://example.com/${Math.random()}`;
 
       const response = await request(app)
         .post('/videos')
         .type('form')
-        .send({title, description})
+        .send({title, description, url})
 
       //console.log(response.text);
       const bodyText = parseTextFromHTML(response.text, 'body');
@@ -168,17 +174,17 @@ describe('POST /videos', () => {
   describe('when the URL is missing', () => {
     it('renders the validation error message', async () => {
       const title = 'Cats';
-      const description = 'Everyone like Cats';
       const url = '';
 
       const response = await request(app)
         .post('/videos')
         .type('form')
-        .send({title, description, url})
+        .send({title, url})
 
       //console.log(response.text);
-      const bodyText = parseTextFromHTML(response.text, 'body');
-      assert.include(bodyText, 'url is required');
+      const pageText = parseTextFromHTML(response.text, 'body');
+      assert.include(pageText, 'a URL is required');
+
     });
   });
 });

@@ -39,6 +39,13 @@ describe('Video', () => {
 
       assert.strictEqual(video.url, urlAsInt.toString());
     });
+    it('is required', () => {
+      const video = new Video({url: null});
+
+      video.validateSync();
+
+      assert.equal(video.errors.url.message, 'a URL is required');
+    });
   });
 });
 
