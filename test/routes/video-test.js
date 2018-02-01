@@ -52,8 +52,8 @@ describe('GET /videos/:id', () => {
     const response = await request(app).get(`/videos/${video._id}`);
 
     const pageText = parseTextFromHTML(response.text, 'body');
-    //const iFrame = queryHTML(response.text, 'iframe');
-    //assert.equal(iFrame.src, video.url);
+    const iFrame = queryHTML(response.text, 'iframe');
+    assert.equal(iFrame.src, video.url);
     assert.include(pageText, video.title);
     assert.include(pageText, video.description);
   });
