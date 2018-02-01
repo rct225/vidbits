@@ -301,13 +301,11 @@ describe('POST /videos/:id/updates', () => {
       });
 
       const title = '';
-      const description = 'New description';
-      const url = `http://new.example.com/${Math.random()}`;
 
       const response = await request(app)
         .post(`/videos/${video._id}/updates`)
         .type('form')
-        .send({title, description, url});
+        .send({title: title, url: video.url});
 
       const urlInput = queryHTML(response.text, '#url-input');
       assert.equal(urlInput.value, video.url);

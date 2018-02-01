@@ -53,7 +53,7 @@ router.post('/videos/:id/updates', async (req, res) => {
 
   if (video.errors) {
     res.status(400);
-    res.render('videos/show', {video});
+    res.render('videos/edit', {video});
     //res.redirect(`/videos/${video._id}`);
   } else {
     await video.save();
