@@ -225,7 +225,7 @@ describe('POST /videos/:id/updates', () => {
     const description = 'New description';
     const url = `http://new.example.com/${Math.random()}`;
 
-    const response = await request(app)
+    await request(app)
       .post(`/videos/${video._id}/updates`)
       .type('form')
       .send({title, description, url});
@@ -254,22 +254,26 @@ describe('POST /videos/:id/updates', () => {
     assert.equal(response.status, 302);
     assert.equal(response.headers.location, `/videos/${video._id}`);
   });
-  it('does not save when record is ivalid', async () => {
-    const video = await Video.create({
-      title: 'Meow',
-      description: 'Everyone like Cats',
-      url: `http://example.com/${Math.random()}`,
+  describe('when the record is invalid', () => {
+    it('does not save the record', async () => {
+      const video = await Video.create({
+        title: 'Meow',
+        description: 'Everyone like Cats',
+        url: `http://example.com/${Math.random()}`,
+      });
+
+      const title = '';
+      const description = 'New description';
+      const url = `http://new.example.com/${Math.random()}`;
+
+      await request(app)
+        .post(`/videos/${video._id}/updates`)
+        .type('form')
+        .send({title, description, url});
+
+      const checkVideo = await Video.findOne({ _id: video._id});
+      assert.equal(checkVideo.title, video.title);
+      assert.equal(checkVideo.url, video.url);
     });
-
-    const title = 1;
-    const description = 'New description';
-    const url = `http://new.example.com/${Math.random()}`;
-
-    const response = await request(app)
-      .post(`/videos/${video._id}/updates`)
-      .type('form')
-      .send({title, description, url});
-
-    assert.equal(response.status, 400);
   });
 });
