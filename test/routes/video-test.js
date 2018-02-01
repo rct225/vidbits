@@ -276,22 +276,41 @@ describe('POST /videos/:id/updates', () => {
       assert.equal(checkVideo.url, video.url);
     });
     it('responds with a 400 status', async () => {
-         const video = await Video.create({
-           title: 'Meow',
-           description: 'Everyone like Cats',
-           url: `http://example.com/${Math.random()}`,
-        });
+      const video = await Video.create({
+         title: 'Meow',
+         description: 'Everyone like Cats',
+         url: `http://example.com/${Math.random()}`,
+      });
 
-        const title = '';
-        const description = 'New description';
-        const url = `http://new.example.com/${Math.random()}`;
+      const title = '';
+      const description = 'New description';
+      const url = `http://new.example.com/${Math.random()}`;
 
-        const response = await request(app)
-          .post(`/videos/${video._id}/updates`)
-          .type('form')
-          .send({title, description, url});
+      const response = await request(app)
+        .post(`/videos/${video._id}/updates`)
+        .type('form')
+        .send({title, description, url});
 
-        assert.equal(response.status, 400);
+      assert.equal(response.status, 400);
+    });
+    it('renders the Edit form', async () => {
+      const video = await Video.create({
+         title: 'Meow',
+         description: 'Everyone like Cats',
+         url: `http://example.com/${Math.random()}`,
+      });
+
+      const title = '';
+      const description = 'New description';
+      const url = `http://new.example.com/${Math.random()}`;
+
+      const response = await request(app)
+        .post(`/videos/${video._id}/updates`)
+        .type('form')
+        .send({title, description, url});
+
+      const urlInput = queryHTML(response.text, '#url-input');
+      assert.equal(urlInput.value, video.url);
     });
   });
 });
