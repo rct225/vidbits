@@ -6,14 +6,16 @@
       <label class="form-label" for="title">Title</label>
       <input id="title-input" name="title" value="{{video.title}}" />
       {{#with video.errors.title as |error|}}
-      <span>{{error.message}}</span>
+        <span>{{error.message}}</span>
       {{/with}}
       <label class="form-label" for="description">Description</label>
       <textarea id="description-input" name="description">{{video.description}}</textarea>
 
       <label class="form-label" for="url">URL</label>
       <input id="url-input" name="url" value="{{video.url}}" />
-      
+      {{#with video.errors.url as |error|}}
+        <span>{{error.message}}</span>
+      {{/with}}
       <button class="button submit-button" id="submit-button" type="submit">
         <p>Save a video</p>
       </button>
