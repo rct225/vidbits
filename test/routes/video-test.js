@@ -47,10 +47,12 @@ describe('GET /videos/:id', () => {
     const video = await Video.create({
       title: 'Cats',
       description: 'Everyone like Cats',
+      url: `http://example.com/${Math.random()}`,
     });
 
     const response = await request(app).get(`/videos/${video._id}`);
 
+    console.log(response.text);
     const pageText = parseTextFromHTML(response.text, 'body');
     const iFrame = queryHTML(response.text, 'iframe');
     assert.equal(iFrame.src, video.url);
