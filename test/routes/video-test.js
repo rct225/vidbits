@@ -152,16 +152,33 @@ describe('POST /videos', () => {
     it('preserves the other field values', async () => {
       const title = '';
       const description = 'Everyone like Cats';
+      const url = `http://example.com/${Math.random()}`;
 
       const response = await request(app)
         .post('/videos')
         .type('form')
-        .send({title, description})
+        .send({title, description, url})
 
       const descriptionInput = queryHTML(response.text, '[name="description"]');
-      //const urlInput = queryHTML(response.text, '[name="url"]');
+      const urlInput = queryHTML(response.text, '[name="url"]');
       assert.equal(descriptionInput.value, description);
-      //assert.equal(urlInput.value, url);
+      assert.equal(urlInput.value, url);
+    });
+  });
+  describe('when the URL is missing', () => {
+    it('renders the validation error message', async () => {
+      const title = 'Cats';
+      const description = 'Everyone like Cats';
+      const url = '';
+
+      const response = await request(app)
+        .post('/videos')
+        .type('form')
+        .send({title, description, url})
+
+      //console.log(response.text);
+      const bodyText = parseTextFromHTML(response.text, 'body');
+      assert.include(bodyText, 'url is required');
     });
   });
 });
