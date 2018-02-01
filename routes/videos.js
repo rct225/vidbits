@@ -22,7 +22,7 @@ router.get('/videos/:id/edit', async (req, res) => {
   const id = req.params.id;
   video = await Video.findOne({ _id: id });
 
-  res.render('videos/create', {video});
+  res.render('videos/edit', {video});
 });
 
 router.post('/videos', async (req, res) => {
