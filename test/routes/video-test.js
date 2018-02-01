@@ -229,9 +229,29 @@ describe('POST /videos/:id/updates', () => {
       .post(`/videos/${video._id}/updates`)
       .type('form')
       .send({title, description, url});
-    console.log(response.text);
+    //console.log(response.text);
     const updatedVideo = await Video.findOne({ _id: video._id });
-    console.log(updatedVideo);
+    //console.log(updatedVideo);
     assert.include(updatedVideo, {title, description, url});
+  });
+  it('redirects to the show page', async () => {
+    const video = await Video.create({
+      title: 'Meow',
+      description: 'Everyone like Cats',
+      url: `http://example.com/${Math.random()}`,
+    });
+
+    const title = 'New Title';
+    const description = 'New description';
+    const url = `http://new.example.com/${Math.random()}`;
+
+    const response = await request(app)
+      .post(`/videos/${video._id}/updates`)
+      .type('form')
+      .send({title, description, url});
+
+    //console.log(response);
+    assert.equal(response.status, 302);
+    assert.equal(response.headers.location, `/videos/${video._id}`);
   });
 });
