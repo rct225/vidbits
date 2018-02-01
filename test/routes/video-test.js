@@ -276,11 +276,11 @@ describe('POST /videos/:id/updates', () => {
       assert.equal(checkVideo.url, video.url);
     });
     it('responds with a 400 status', async () => {
-        // const video = await Video.create({
-        //   title: 'Meow',
-        //   description: 'Everyone like Cats',
-        //   url: `http://example.com/${Math.random()}`,
-        // });
+         const video = await Video.create({
+           title: 'Meow',
+           description: 'Everyone like Cats',
+           url: `http://example.com/${Math.random()}`,
+        });
 
         const title = '';
         const description = 'New description';
@@ -291,7 +291,7 @@ describe('POST /videos/:id/updates', () => {
           .type('form')
           .send({title, description, url});
 
-        assert.equal(response.state, 400);
+        assert.equal(response.status, 400);
     });
   });
 });

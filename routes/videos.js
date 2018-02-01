@@ -51,11 +51,16 @@ router.post('/videos/:id/updates', async (req, res) => {
   video.url = url;
   video.validateSync();
 
-  //res.render('videos/edit', {video});
-  if (!video.errors) {
+  if (video.errors) {
+    res.status(400);
+    res.render('videos/show', {video});
+    //res.redirect(`/videos/${video._id}`);
+  } else {
     await video.save();
+
+    res.redirect(`/videos/${video._id}`);
   }
-  res.redirect(`/videos/${video._id}`);
+
 });
 
 module.exports = router;
