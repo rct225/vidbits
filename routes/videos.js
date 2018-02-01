@@ -52,8 +52,8 @@ router.post('/videos/:id/updates', async (req, res) => {
   // video.url = url;
   // video.validateSync();
 
-  res.render('videos/edit', {video});
-
+  //res.render('videos/edit', {video});
+  res.redirect(`/videos/${video._id}`);
 });
 
 module.exports = router;
