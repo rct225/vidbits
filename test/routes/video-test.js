@@ -73,11 +73,12 @@ describe('GET /videos/:id/edit', () => {
     });
 
     const response = await request(app).get(`/videos/${video._id}/edit`);
-    const titleInput = queryHTML(response.text, '[name="title"]');
-    const descriptionInput = queryHTML(response.text, '[name="description"]');
-    const urlInput = queryHTML(response.text, '[name="url"]');
-    assert.equal(descriptionInput.value, description);
-    assert.equal(urlInput.value, url);
+    const titleInput = queryHTML(response.text, '#title-input');
+    const descriptionInput = queryHTML(response.text, '#description-input');
+    const urlInput = queryHTML(response.text, '#url-input');
+    assert.equal(titleInput.value, video.title);
+    assert.equal(descriptionInput.value, video.description);
+    assert.equal(urlInput.value, video.url);
   });
 });
 
