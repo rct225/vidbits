@@ -17,8 +17,9 @@ describe('User updating video', () => {
 
     const newTitle = 'Kittens';
     browser.setValue('#title-input', newTitle);
+    browser.click('#submit-button');
 
     const bodyText = browser.getText('body');
-    assert.include(bodyText, videoToAdd.title);
+    assert.include(bodyText, newTitle);
   });
 });
