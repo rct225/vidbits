@@ -25,7 +25,7 @@ describe('GET /videos', () => {
 
   it('renders existing Videos', async () => {
     const video = await Video.create({
-      title: 'Cats',
+      title: 'Meow',
       description: 'Everyone like Cats',
       url: `http://example.com/${Math.random()}`
     });
@@ -45,7 +45,7 @@ describe('GET /videos/:id', () => {
 
   it('renders the Video', async () => {
     const video = await Video.create({
-      title: 'Cats',
+      title: 'Meow',
       description: 'Everyone like Cats',
       url: `http://example.com/${Math.random()}`,
     });
@@ -67,7 +67,7 @@ describe('GET /videos/:id/edit', () => {
 
   it('renders a form for the Video', async () => {
     const video = await Video.create({
-      title: 'Cats',
+      title: 'Meow',
       description: 'Everyone like Cats',
       url: `http://example.com/${Math.random()}`,
     });
@@ -87,7 +87,7 @@ describe('POST /videos', () => {
   afterEach(disconnectDatabase);
 
   it('responds with a 302 status code', async () => {
-    const title = 'Cats';
+    const title = 'Meow';
     const description = 'Everyone like Cats';
     const url = `http://example.com/${Math.random()}`;
 
@@ -99,7 +99,7 @@ describe('POST /videos', () => {
     assert.equal(response.status, 302);
   });
   it('redirects to the new Video show page', async () => {
-    const title = 'Cats';
+    const title = 'Meow';
     const description = 'Everyone like Cats';
     const url = `http://example.com/${Math.random()}`;
 
@@ -111,7 +111,7 @@ describe('POST /videos', () => {
     assert.match(response.headers.location, /\/videos\/\w*$/);
   });
   it('saves a Video document', async () => {
-    const title = 'Cats';
+    const title = 'Meow';
     const description = 'Everyone like Cats';
     const url = `http://example.com/${Math.random()}`;
 
@@ -194,7 +194,7 @@ describe('POST /videos', () => {
   });
   describe('when the URL is missing', () => {
     it('renders the validation error message', async () => {
-      const title = 'Cats';
+      const title = 'Meow';
       const url = '';
 
       const response = await request(app)
@@ -207,5 +207,30 @@ describe('POST /videos', () => {
       assert.include(pageText, 'a URL is required');
 
     });
+  });
+});
+
+describe('POST /videos/:id/updates', () => {
+  beforeEach(connectDatabase);
+  afterEach(disconnectDatabase);
+
+  it('updates the record', async () => {
+    const video = await Video.create({
+      title: 'Meow',
+      description: 'Everyone like Cats',
+      url: `http://example.com/${Math.random()}`,
+    });
+
+    const title = 'New Title';
+    const description = 'New description';
+    const url = `http://new.example.com/${Math.random()}`;
+
+    const response = await request(app)
+      .post(`/videos/${video._id}/updates`)
+      .type('form')
+      .send({title, description, url});
+
+    const updatedVideo = await Video.findOne({ _id: video._id });
+    assert.include(updatedVideo, {title, description, url});
   });
 });
