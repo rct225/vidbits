@@ -254,4 +254,22 @@ describe('POST /videos/:id/updates', () => {
     assert.equal(response.status, 302);
     assert.equal(response.headers.location, `/videos/${video._id}`);
   });
+  it('does not save when record is ivalid', async () => {
+    const video = await Video.create({
+      title: 'Meow',
+      description: 'Everyone like Cats',
+      url: `http://example.com/${Math.random()}`,
+    });
+
+    const title = 1;
+    const description = 'New description';
+    const url = `http://new.example.com/${Math.random()}`;
+
+    const response = await request(app)
+      .post(`/videos/${video._id}/updates`)
+      .type('form')
+      .send({title, description, url});
+
+    assert.equal(response.status, 400);
+  });
 });
