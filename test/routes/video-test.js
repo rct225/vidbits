@@ -324,12 +324,22 @@ describe('POST /videos/:id/deletions', () => {
       url: `http://example.com/${Math.random()}`,
     });
 
-    await request(app)
-      .post(`/videos/${video._id}/deletions`)
-      .type('form')
-      .send();
+    await request(app).post(`/videos/${video._id}/deletions`);
+
     //console.log(response.text);
-    const removedVideo = await Video.findOne({ _id: video._id });
-    assert.equal(removedVideo.length, 0)
+    const removedVideos = await Video.find();
+    assert.equal(removedVideos.length, 0)
+  });
+  it('redirects to the landing page', async () => {
+    const video = await Video.create({
+      title: 'Meow',
+      description: 'Everyone like Cats',
+      url: `http://example.com/${Math.random()}`,
+    });
+
+    const response = await request(app).post(`/videos/${video._id}/deletions`);
+
+    assert.equal(response.status, 302);
+    assert.equal(response.headers.location, '/');
   });
 });
