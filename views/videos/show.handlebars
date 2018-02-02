@@ -5,6 +5,9 @@
       <h1>{{video.title}}</h1>
     </div>
     <a id="edit" href="/videos/{{video._id}}/edit">Edit</a>
+    <form>
+      <input id="delete" name="delete" value="Delete" />
+    </form>
     /* iFrame with class video-player */
     <iframe class="video-player" src="{{video.url}}" frameborder="0" allowfullscreen></iframe>
     <div class="video-description">
