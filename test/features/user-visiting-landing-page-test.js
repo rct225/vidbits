@@ -1,18 +1,6 @@
 const {assert} = require('chai');
-const {generateRandomUrl} = require('../generators.js');
-
-const buildAndSubmitForm = (browser, video) => {
-  title = video.title;
-  description = video.description;
-  url = video.url;
-
-  browser.setValue('#title-input', title);
-  browser.setValue('#description-input', description);
-  browser.setValue('#url-input', url);
-  //browser.click('#submit-button');
-  browser.click('[type="submit"]');
-};
-
+const {generateRandomUrl} = require('../generators');
+const {buildAndSubmitForm} = require('../utilities')
 
 describe('User visiting landing page', () => {
   describe('with no existing videos', () => {

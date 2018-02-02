@@ -1,5 +1,6 @@
 const {assert} = require('chai');
 const {generateRandomUrl} = require('../generators.js');
+const {buildAndSubmitForm} = require('../utilities')
 
 describe('User updating video', () => {
   it('changes the values', () => {
@@ -10,10 +11,7 @@ describe('User updating video', () => {
     };
 
     browser.url('/videos/create');
-    browser.setValue('#title-input', videoToAdd.title);
-    browser.setValue('#description-input', videoToAdd.description);
-    browser.setValue('#url-input', videoToAdd.url);
-    browser.click('#submit-button');
+    buildAndSubmitForm(browser, videoToAdd);
     browser.click('#edit');
 
     const newTitle = 'Kittens';
@@ -31,10 +29,7 @@ describe('User updating video', () => {
     };
 
     browser.url('/videos/create');
-    browser.setValue('#title-input', videoToAdd.title);
-    browser.setValue('#description-input', videoToAdd.description);
-    browser.setValue('#url-input', videoToAdd.url);
-    browser.click('#submit-button');
+    buildAndSubmitForm(browser, videoToAdd);
     browser.click('#edit');
 
     const newTitle = 'Kittens';

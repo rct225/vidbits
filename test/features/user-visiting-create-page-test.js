@@ -1,5 +1,6 @@
 const {assert} = require('chai');
 const {generateRandomUrl} = require('../generators.js');
+const {buildAndSubmitForm} = require('../utilities')
 
 describe('User visiting new videos page', () => {
   it('can save a video', () => {
@@ -10,10 +11,7 @@ describe('User visiting new videos page', () => {
     };
 
     browser.url('/videos/create');
-    browser.setValue('#title-input', videoToAdd.title);
-    browser.setValue('#description-input', videoToAdd.description);
-    browser.setValue('#url-input', videoToAdd.url);
-    browser.click('#submit-button');
+    buildAndSubmitForm(browser, videoToAdd);
 
     const bodyText = browser.getText('body');
     assert.include(bodyText, videoToAdd.title);
