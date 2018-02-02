@@ -312,3 +312,24 @@ describe('POST /videos/:id/updates', () => {
     });
   });
 });
+
+describe('POST /videos/:id/deletions', () => {
+  beforeEach(connectDatabase);
+  afterEach(disconnectDatabase);
+
+  it('removes the record', async () => {
+    const video = await Video.create({
+      title: 'Meow',
+      description: 'Everyone like Cats',
+      url: `http://example.com/${Math.random()}`,
+    });
+
+    await request(app)
+      .post(`/videos/${video._id}/deletions`)
+      .type('form')
+      .send();
+    //console.log(response.text);
+    const removedVideo = await Video.findOne({ _id: video._id });
+    assert.equal(removedVideo.length, 0)
+  });
+});
