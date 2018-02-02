@@ -53,11 +53,11 @@ describe('GET /videos/:id', () => {
     const response = await request(app).get(`/videos/${video._id}`);
 
     // console.log(response.text);
-    const pageText = parseTextFromHTML(response.text, 'body');
+    const bodyText = parseTextFromHTML(response.text, 'body');
     const iFrame = queryHTML(response.text, 'iframe');
     assert.equal(iFrame.src, video.url);
-    assert.include(pageText, video.title);
-    assert.include(pageText, video.description);
+    assert.include(bodyText, video.title);
+    assert.include(bodyText, video.description);
   });
 });
 
@@ -203,8 +203,8 @@ describe('POST /videos', () => {
         .send({title, url})
 
       //console.log(response.text);
-      const pageText = parseTextFromHTML(response.text, 'body');
-      assert.include(pageText, 'a URL is required');
+      const bodyText = parseTextFromHTML(response.text, 'body');
+      assert.include(bodyText, 'a URL is required');
 
     });
   });
