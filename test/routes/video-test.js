@@ -4,6 +4,7 @@ const {jsdom} = require('jsdom');
 const app = require('../../app');
 const {connectDatabase, disconnectDatabase} = require('../database-utilities');
 const Video = require('../../models/video');
+const {generateRandomUrl} = require('../generators.js');
 
 const queryHTML = (htmlAsString, selector) => {
   return jsdom(htmlAsString).querySelector(selector);
@@ -27,7 +28,7 @@ describe('GET /videos', () => {
     const video = await Video.create({
       title: 'Meow',
       description: 'Everyone like Cats',
-      url: `http://example.com/${Math.random()}`
+      url: generateRandomUrl('example.com')
     });
 
     const response = await request(app).get('/');
@@ -47,7 +48,7 @@ describe('GET /videos/:id', () => {
     const video = await Video.create({
       title: 'Meow',
       description: 'Everyone like Cats',
-      url: `http://example.com/${Math.random()}`,
+      url: generateRandomUrl('example.com'),
     });
 
     const response = await request(app).get(`/videos/${video._id}`);
@@ -69,7 +70,7 @@ describe('GET /videos/:id/edit', () => {
     const video = await Video.create({
       title: 'Meow',
       description: 'Everyone like Cats',
-      url: `http://example.com/${Math.random()}`,
+      url: generateRandomUrl('example.com'),
     });
 
     const response = await request(app).get(`/videos/${video._id}/edit`);
@@ -89,7 +90,7 @@ describe('POST /videos', () => {
   it('responds with a 302 status code', async () => {
     const title = 'Meow';
     const description = 'Everyone like Cats';
-    const url = `http://example.com/${Math.random()}`;
+    const url = generateRandomUrl('example.com');
 
     const response = await request(app)
       .post('/videos')
@@ -101,7 +102,7 @@ describe('POST /videos', () => {
   it('redirects to the new Video show page', async () => {
     const title = 'Meow';
     const description = 'Everyone like Cats';
-    const url = `http://example.com/${Math.random()}`;
+    const url = generateRandomUrl('example.com');
 
     const response = await request(app)
       .post('/videos')
@@ -113,7 +114,7 @@ describe('POST /videos', () => {
   it('saves a Video document', async () => {
     const title = 'Meow';
     const description = 'Everyone like Cats';
-    const url = `http://example.com/${Math.random()}`;
+    const url = generateRandomUrl('example.com');
 
     const response = await request(app)
       .post('/videos')
@@ -127,7 +128,7 @@ describe('POST /videos', () => {
     it('does not save the Video', async () => {
       const title = '';
       const description = 'Everyone like Cats';
-      const url = `http://example.com/${Math.random()}`;
+      const url = generateRandomUrl('example.com');
 
       const response = await request(app)
         .post('/videos')
@@ -140,7 +141,7 @@ describe('POST /videos', () => {
     it('responds with a 400', async () => {
       const title = '';
       const description = 'Everyone like Cats';
-      const url = `http://example.com/${Math.random()}`;
+      const url = generateRandomUrl('example.com');
 
       const response = await request(app)
         .post('/videos')
@@ -152,7 +153,7 @@ describe('POST /videos', () => {
     it('renders the video form', async () => {
       const title = '';
       const description = 'Everyone like Cats';
-      const url = `http://example.com/${Math.random()}`;
+      const url = generateRandomUrl('example.com');
 
       const response = await request(app)
         .post('/videos')
@@ -165,7 +166,7 @@ describe('POST /videos', () => {
     it('renders the validation error message', async () => {
       const title = '';
       const description = 'Everyone like Cats';
-      const url = `http://example.com/${Math.random()}`;
+      const url = generateRandomUrl('example.com');
 
       const response = await request(app)
         .post('/videos')
@@ -179,7 +180,7 @@ describe('POST /videos', () => {
     it('preserves the other field values', async () => {
       const title = '';
       const description = 'Everyone like Cats';
-      const url = `http://example.com/${Math.random()}`;
+      const url = generateRandomUrl('example.com');
 
       const response = await request(app)
         .post('/videos')
@@ -218,7 +219,7 @@ describe('POST /videos/:id/updates', () => {
     const video = await Video.create({
       title: 'Meow',
       description: 'Everyone like Cats',
-      url: `http://example.com/${Math.random()}`,
+      url: generateRandomUrl('example.com'),
     });
 
     const title = 'New Title';
@@ -238,7 +239,7 @@ describe('POST /videos/:id/updates', () => {
     const video = await Video.create({
       title: 'Meow',
       description: 'Everyone like Cats',
-      url: `http://example.com/${Math.random()}`,
+      url: generateRandomUrl('example.com'),
     });
 
     const title = 'New Title';
@@ -259,7 +260,7 @@ describe('POST /videos/:id/updates', () => {
       const video = await Video.create({
         title: 'Meow',
         description: 'Everyone like Cats',
-        url: `http://example.com/${Math.random()}`,
+        url: generateRandomUrl('example.com'),
       });
 
       const title = '';
@@ -279,7 +280,7 @@ describe('POST /videos/:id/updates', () => {
       const video = await Video.create({
          title: 'Meow',
          description: 'Everyone like Cats',
-         url: `http://example.com/${Math.random()}`,
+         url: generateRandomUrl('example.com'),
       });
 
       const title = '';
@@ -297,7 +298,7 @@ describe('POST /videos/:id/updates', () => {
       const video = await Video.create({
          title: 'Meow',
          description: 'Everyone like Cats',
-         url: `http://example.com/${Math.random()}`,
+         url: generateRandomUrl('example.com'),
       });
 
       const title = '';
@@ -321,7 +322,7 @@ describe('POST /videos/:id/deletions', () => {
     const video = await Video.create({
       title: 'Meow',
       description: 'Everyone like Cats',
-      url: `http://example.com/${Math.random()}`,
+      url: generateRandomUrl('example.com'),
     });
 
     await request(app).post(`/videos/${video._id}/deletions`);
@@ -334,7 +335,7 @@ describe('POST /videos/:id/deletions', () => {
     const video = await Video.create({
       title: 'Meow',
       description: 'Everyone like Cats',
-      url: `http://example.com/${Math.random()}`,
+      url: generateRandomUrl('example.com'),
     });
 
     const response = await request(app).post(`/videos/${video._id}/deletions`);

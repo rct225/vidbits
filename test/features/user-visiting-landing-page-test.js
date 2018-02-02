@@ -1,18 +1,16 @@
 const {assert} = require('chai');
-
-const generateRandomUrl = (domain) => {
-  return `http://${domain}/${Math.random()}`;
-};
+const {generateRandomUrl} = require('../generators.js');
 
 const buildAndSubmitForm = (browser, video) => {
   title = video.title;
   description = video.description;
   url = video.url;
 
-  browser.setValue('[name=title]', title);
-  browser.setValue('[name=description]', description);
-  browser.setValue('[name=url]', url);
-  browser.click('[type=submit]');
+  browser.setValue('#title-input', title);
+  browser.setValue('#description-input', description);
+  browser.setValue('#url-input', url);
+  //browser.click('#submit-button');
+  browser.click('[type="submit"]');
 };
 
 

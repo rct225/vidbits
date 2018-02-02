@@ -1,11 +1,12 @@
 const {assert} = require('chai');
+const {generateRandomUrl} = require('../generators.js');
 
 describe('User deleting video', () => {
   it('removes video from the list', async () => {
     const videoToAdd = {
       title: 'Meow',
       description: 'Everyone like Cats',
-      url: `http://example.com/${Math.random()}`
+      url: generateRandomUrl('example.com')
     };
 
     browser.url('/videos/create');

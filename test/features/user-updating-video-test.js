@@ -1,11 +1,12 @@
 const {assert} = require('chai');
+const {generateRandomUrl} = require('../generators.js');
 
 describe('User updating video', () => {
   it('changes the values', () => {
     const videoToAdd = {
       title: 'Meow',
       description: 'Everyone like Cats',
-      url: `http://example.com/${Math.random()}`
+      url: generateRandomUrl('example.com')
     };
 
     browser.url('/videos/create');
@@ -26,7 +27,7 @@ describe('User updating video', () => {
     const videoToAdd = {
       title: 'Meow',
       description: 'Everyone like Cats',
-      url: `http://example.com/${Math.random()}`
+      url: generateRandomUrl('example.com')
     };
 
     browser.url('/videos/create');
